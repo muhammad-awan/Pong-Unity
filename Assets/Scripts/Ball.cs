@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ball : MonoBehaviour {
 
@@ -26,6 +27,16 @@ public class Ball : MonoBehaviour {
         //LeftGoal & RightGoal
         if ((collision.gameObject.name == "LeftGoal") || (collision.gameObject.name == "RightGoal"))
         {
+            if(collision.gameObject.name == "LeftGoal" )
+            {
+                IncreaseTextUIScore("LeftScoreUI");
+            }
+
+            if(collision.gameObject.name == "RightGoal")
+            {
+                IncreaseTextUIScore("RightScoreUI");
+            }
+
             transform.position = new Vector2(0, 0);
         }
     }
@@ -55,6 +66,17 @@ public class Ball : MonoBehaviour {
     float BallHitPaddleWhere(Vector2 ball, Vector2 paddle, float paddleHeight)
     {
         return (ball.y - paddle.y) / paddleHeight;
+    }
+
+    void IncreaseTextUIScore(string textUIName)
+    {
+        var textUIComp = GameObject.Find(textUIName).GetComponent<Text>();
+
+        int score = int.Parse(textUIComp.text);
+
+        score++;
+
+        textUIComp.text = score.ToString();
     }
 
 }
